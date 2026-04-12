@@ -3024,16 +3024,16 @@ const handleWindowsZoomInAlias = (event, input, webContents) => {
   if (process.platform !== 'win32' || !input || input.type !== 'keyDown') {
     return false
   }
-  if (!input.control || input.alt || input.meta || input.shift) {
+  if (!input.control || input.alt || input.meta) {
     return false
   }
-  if (input.key !== '=' && input.code !== 'Equal') {
+  if (input.key !== '=' && input.key !== '+') {
     return false
   }
   if (!webContents || webContents.isDestroyed()) {
     return false
   }
-  // Chromium zooms in on Ctrl+Plus, but Windows users also expect Ctrl+=.
+  // Match the generated character so the alias works across keyboard layouts.
   event.preventDefault()
   webContents.setZoomLevel(webContents.getZoomLevel() + 1)
   return true
